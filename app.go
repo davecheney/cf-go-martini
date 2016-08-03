@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
+	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 
 	"github.com/cloudfoundry-community/go-cfenv"
 	"github.com/go-martini/martini"
@@ -77,7 +77,7 @@ func DB(db *sql.DB) martini.Handler {
 }
 
 func initDB() *sql.DB {
-	db, err := sql.Open("mysql", dsn())
+	db, err := sql.Open("postgres", dsn())
 	if err != nil {
 		panic(err.Error())
 	}
@@ -99,22 +99,17 @@ func initDB() *sql.DB {
 func dsn() string {
 	appEnv, _ := cfenv.Current()
 	services := appEnv.Services
-	var mysqlService cfenv.Service
 
 	for _, instances := range services {
 		for _, instance := range instances {
-			if contains(instance.Tags, "mysql") {
-				mysqlService = instance
+			if contains(instance.Tags, "postgresql") {
+				credentials := instance.Credentials
+
+				return credentials["uri"]
 			}
 		}
 	}
-
-	credentials := mysqlService.Credentials
-	return fmt.Sprintf("%v:%v@tcp(%v:3306)/%v",
-		credentials["username"],
-		credentials["password"],
-		credentials["hostname"],
-		credentials["name"])
+	panic("VCAP_SERVICES:" + os.Getenv("VCAP_SERVICES"))
 }
 
 func schemaIsNotCreated(db *sql.DB) bool {
@@ -129,7 +124,7 @@ func schemaIsNotCreated(db *sql.DB) bool {
 
 func createSchema(db *sql.DB) {
 	_, err := db.Exec(
-		"CREATE TABLE languages (name varchar(45) NOT NULL, creator varchar(45) NOT NULL, PRIMARY KEY (name)) ENGINE=InnoDB DEFAULT CHARSET=utf8")
+		"CREATE TABLE languages (name varchar(45) NOT NULL, creator varchar(45) NOT NULL, PRIMARY KEY (name))")
 
 	if err != nil {
 		panic(err.Error())

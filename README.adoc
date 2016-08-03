@@ -10,12 +10,7 @@ A basic sample application that demonstrates a few things:
 
 == Running on Cloud Foundry
 
-The application requires binding to a MySQL service. It also requires you to be running https://github.com/cloudfoundry/cli/releases/tag/v6.1.0[version 6.1] of the CF CLI.
-
-----
-$ cf cs cleardb spark martini-db
-$ cf push --random-route
-----
+The application requires binding to a Postgresql service. It also requires you to be running https://github.com/cloudfoundry/cli/releases/tag/v6.1.0[version 6.1] of the CF CLI.
 
 == What you get:
 
