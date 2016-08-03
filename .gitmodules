@@ -1,3 +1,6 @@
 [submodule "vendor/github.com/lib/pq"]
 	path = vendor/github.com/lib/pq
 	url = https://github.com/lib/pq
+[submodule "vendor/github.com/go-martini/martini"]
+	path = vendor/github.com/go-martini/martini
+	url = https://github.com/go-martini/martini
