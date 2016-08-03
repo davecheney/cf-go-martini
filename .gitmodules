@@ -4,3 +4,6 @@
 [submodule "vendor/github.com/go-martini/martini"]
 	path = vendor/github.com/go-martini/martini
 	url = https://github.com/go-martini/martini
+[submodule "vendor/github.com/codegangsta/inject"]
+	path = vendor/github.com/codegangsta/inject
+	url = https://github.com/codegangsta/inject
