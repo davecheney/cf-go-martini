@@ -1,0 +1,9 @@
+deployment:
+  staging:
+    branch: master
+    owner: davecheney
+    commands:
+      - cf api https://api.system.staging.digital.gov.au
+      - cf auth $CF_STAGING_USER $CF_STAGING_PASSWORD
+      - cf target -o dto -s dfc-test
+      - cf push
