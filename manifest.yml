@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: cf-pgsql-sample-app
+- name: cf-pgsql-sample-app
   command: cf-pgsql-sample-app
   memory: 256M
   instances: 1
