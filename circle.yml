@@ -9,6 +9,10 @@ checkout:
     - git submodule sync
     - git submodule update --init
 
+test:
+  override:
+  - go test .
+
 deployment:
   staging:
     branch: master
