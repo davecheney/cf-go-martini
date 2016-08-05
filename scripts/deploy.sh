@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -e # please dont use -x as this will print secrets in the build log
+set -eu # please dont use -x as this will print secrets in the build log
+
 
 # these env vars can be overridden by circle
 CF_API=${CF_API:-https://api.system.staging.digital.gov.au}
@@ -20,8 +21,11 @@ cf create-service dto-shared-pgsql shared-psql ${CF_SERVICE_NAME}
 cf bind-service ${CF_APP_NAME} ${CF_SERVICE_NAME}
 
 # step 3. is this a PR? if so, push the PR details into the cf app env
-if [ -n "${CI_PULL_REQUEST}" ] ; then
-	cf set-env ${CF_APP_NANE} CI_PULL_REQUEST ${CI_PULL_REQUEST}
+
+if [ -z "${CI_PULL_REQUEST:-}" ] ; then
+	echo "not a pull request"
+else
+	cf set-env ${CF_APP_NAME} CI_PULL_REQUEST ${CI_PULL_REQUEST}
 fi
 
 # step 4. fire!
