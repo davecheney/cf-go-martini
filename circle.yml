@@ -15,7 +15,7 @@ test:
 
 deployment:
   staging:
-    branch: master
+    branch: /.+/
     owner: davecheney
     commands:
       - bash scripts/deploy.sh
