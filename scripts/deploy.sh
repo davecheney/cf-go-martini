@@ -9,7 +9,7 @@ CF_SPACE=${CF_SPACE:-dfc-test}
 
 # step 1. login to the correct org and space with cf
 cf api ${CF_API}
-cf auth ${CF_STAGING_USER} {$CF_STAGING_PASSWORD}
+cf auth ${CF_STAGING_USER} ${CF_STAGING_PASSWORD}
 cf target -o ${CF_ORG} -s ${CF_SPACE}
 
 # step 2. create db service and app for this branch
