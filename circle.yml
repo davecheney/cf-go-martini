@@ -18,12 +18,4 @@ deployment:
     branch: master
     owner: davecheney
     commands:
-      - cf api https://api.system.staging.digital.gov.au
-      - cf auth $CF_STAGING_USER $CF_STAGING_PASSWORD
-      - cf target -o dto -s dfc-test
-      - cf push $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1) --no-start
-      - cf create-service dto-shared-pgsql shared-psql $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1)-db
-      - cf bind-service $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1) $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1)-db
-      - cf set-env $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1) CIRCLE_PR_REPONAME $CIRCLE_PR_REPONAME
-      - cf set-env $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1) CIRCLE_PR_NUMBER $CIRCLE_PR_NUMBER
-      - cf start $CIRCLE_PROJECT_REPONAME-$(git rev-parse --short $CIRCLE_SHA1)
+      - bash scripts/deploy.sh
