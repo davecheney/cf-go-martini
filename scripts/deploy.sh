@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu # please dont use -x as this will print secrets in the build log
+set -e # please dont use -x as this will print secrets in the build log
 
 # these env vars can be overridden by circle
 CF_API=${CF_API:-https://api.system.staging.digital.gov.au}
