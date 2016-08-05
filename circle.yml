@@ -16,7 +16,7 @@ test:
 deployment:
   staging:
     branch: master
-    owner: angiegove
+    owner: AusDTO
     commands:
       - cf api https://api.system.staging.digital.gov.au
       - cf auth $CF_STAGING_USER $CF_STAGING_PASSWORD
