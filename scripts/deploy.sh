@@ -20,10 +20,10 @@ cf create-service dto-shared-pgsql shared-psql ${CF_SERVICE_NAME}
 cf bind-service ${CF_APP_NAME} ${CF_SERVICE_NAME}
 
 # step 3. push branch details into the deployed app's env
-if [ -z ${CIRCLE_PR_REPONAME} ] ; then
+if [ -n ${CIRCLE_PR_REPONAME} ] ; then
 	cf set-env ${CF_APP_NANE} CIRCLE_PR_REPONAME ${CIRCLE_PR_REPONAME}
 fi
-if [ -z ${CIRCLE_PR_NUMBER} ] ; then
+if [ -n ${CIRCLE_PR_NUMBER} ] ; then
 	cf set-env ${CF_APP_NANE} CIRCLE_PR_NUMBER ${CIRCLE_PR_NUMBER}
 fi
 
