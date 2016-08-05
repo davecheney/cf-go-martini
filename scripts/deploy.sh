@@ -20,7 +20,7 @@ cf create-service dto-shared-pgsql shared-psql ${CF_SERVICE_NAME}
 cf bind-service ${CF_APP_NAME} ${CF_SERVICE_NAME}
 
 # step 3. is this a PR? if so, push the PR details into the cf app env
-if [ -n ${CI_PULL_REQUEST} ] ; then
+if [ -n "${CI_PULL_REQUEST}" ] ; then
 	cf set-env ${CF_APP_NANE} CI_PULL_REQUEST ${CI_PULL_REQUEST}
 fi
 
