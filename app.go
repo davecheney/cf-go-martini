@@ -24,10 +24,12 @@ func main() {
 	m.Use(DB(db))
 	m.Use(render.Renderer())
 
-	m.Get("/", func(r render.Render) {
+	m.Get("/", func(r render.Render, db *sql.DB) {
 		appEnv, _ := cfenv.Current()
 
 		r.HTML(200, "hello", appEnv)
+
+		incrementCounter(db)
 	})
 
 	m.Get("/languages", func(r render.Render, db *sql.DB) {
@@ -124,6 +126,13 @@ func schemaIsNotCreated(db *sql.DB) bool {
 
 func createSchema(db *sql.DB) {
 	_, err := db.Exec(
+		"CREATE TABLE counter (name varchar(45) NOT NULL, count INTEGER NOT NULL, PRIMARY KEY (name))")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	_, err = db.Exec(
 		"CREATE TABLE languages (name varchar(45) NOT NULL, creator varchar(45) NOT NULL, PRIMARY KEY (name))")
 
 	if err != nil {
@@ -141,6 +150,8 @@ func createSchema(db *sql.DB) {
 	insertRow(db, "INSERT INTO languages (name, creator) VALUES ('Ruby','Matz')")
 	insertRow(db, "INSERT INTO languages (name, creator) VALUES ('Python','Guido')")
 
+	insertRow(db, "INSERT INTO counter (name, count) VALUES ('sample', 1)")
+
 	err = tx.Commit()
 	if err != nil {
 		panic(err.Error())
@@ -149,6 +160,23 @@ func createSchema(db *sql.DB) {
 
 func insertRow(db *sql.DB, query string) {
 	_, err := db.Exec(query)
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
+func incrementCounter(db *sql.DB) {
+	tx, err := db.Begin()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	_, err = db.Exec("UPDATE counter SET value = value + 1 WHERE name = 'sample'")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	err = tx.Commit()
 	if err != nil {
 		panic(err.Error())
 	}

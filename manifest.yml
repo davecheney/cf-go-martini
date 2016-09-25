@@ -1,10 +1,16 @@
 ---
+command: cf-pgsql-sample-app
+memory: 256M
+instances: 2
+buildpack: https://github.com/cloudfoundry/go-buildpack.git
+services:
+- blue-green-db
+routes:
+- route: blue-green.apps.staging.digital.gov.au
+env:
+  GOVERSION: go1.6
+  GOPACKAGENAME: github.com/davecheney/cf-pgsql-sample-app
+
 applications:
-- name: cf-pgsql-sample-app
-  command: cf-pgsql-sample-app
-  memory: 256M
-  instances: 1
-  buildpack: https://github.com/cloudfoundry/go-buildpack.git
-  env:
-    GOVERSION: go1.6
-    GOPACKAGENAME: github.com/davecheney/cf-pgsql-sample-app
+- name: blue
+- name: green
