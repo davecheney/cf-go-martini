@@ -1,6 +1,7 @@
 ---
 command: cf-pgsql-sample-app
-memory: 256M
+memory: 64M
+disk_quota: 128M
 instances: 2
 buildpack: https://github.com/cloudfoundry/go-buildpack.git
 services:

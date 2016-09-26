@@ -171,7 +171,7 @@ func incrementCounter(db *sql.DB) {
 		panic(err.Error())
 	}
 
-	_, err = db.Exec("UPDATE counter SET value = value + 1 WHERE name = 'sample'")
+	_, err = db.Exec("UPDATE counter SET count = count + 1 WHERE name = 'sample'")
 	if err != nil {
 		panic(err.Error())
 	}
