@@ -6,8 +6,8 @@ instances: 2
 buildpack: https://github.com/cloudfoundry/go-buildpack.git
 services:
 - blue-green-db
-routes:
-- route: blue-green.apps.staging.digital.gov.au
+hosts:
+- blue-green
 env:
   GOVERSION: go1.6
   GOPACKAGENAME: github.com/davecheney/cf-pgsql-sample-app
