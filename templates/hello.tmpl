@@ -5,6 +5,8 @@
   </head>
   <body>
     <h1>CF Environment</h1>
+    <b>You are visitor number {{.count}}</b>
+    {{with .app}}
     <ul>
       <li><strong>ID: </strong> {{.ID}}</li>
       <li><strong>Index: </strong> {{.Index}}</li>
@@ -33,5 +35,6 @@
         {{ end }}
       </tbody>
     </table>
+    {{ end }}
   </body>
 </html>

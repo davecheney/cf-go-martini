@@ -27,7 +27,10 @@ func main() {
 	m.Get("/", func(r render.Render, db *sql.DB) {
 		appEnv, _ := cfenv.Current()
 
-		r.HTML(200, "hello", appEnv)
+		r.HTML(200, "hello", map[string]interface{}{
+			"app":   appEnv,
+			"count": getCount(db),
+		})
 
 		incrementCounter(db)
 	})
@@ -43,6 +46,17 @@ func main() {
 	})
 
 	m.Run()
+}
+
+func getCount(db *sql.DB) int {
+	var count int
+	err := db.QueryRow("SELECT count FROM counter WHERE name='sample'").Scan(&count)
+	switch {
+	case err != nil:
+		panic(err)
+	}
+	return count
+
 }
 
 func fetchLanguages(db *sql.DB) (languages []*Language, err error) {
